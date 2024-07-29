@@ -83,9 +83,9 @@ console_query = result.writeStream \
     .start()
 
 hdfs_query = result.writeStream \
-    .format("csv")\
+    .format("parquet")\
     .option("path", "hdfs://namenode:9000/real_time_processing/classification_results")\
-    .option("checkpointLocation", "hdfs://namenode:9000/real_time_processing/spark_checkpoints/classification_hdfs")\
+    .option("checkpointLocation", "hdfs://namenode:9000/real_time_processing/checkpoint_real_time_classification") \
     .outputMode("append")\
     .start()
 
@@ -94,11 +94,10 @@ kafka_query = result.selectExpr("CAST(id AS STRING) AS key", "to_json(struct(*))
     .format("kafka") \
     .option("kafka.bootstrap.servers", "kafka1:19092,kafka2:19093") \
     .option("topic", "classified_transactions") \
-    .option("checkpointLocation", "hdfs://namenode:9000/real_time_processing/spark_checkpoints/classification_kafka") \
+    .option("checkpointLocation", "hdfs://namenode:9000/real_time_processing/checkpoint_real_time_classification_kafka") \
     .outputMode("append") \
     .start()
 
-    
 console_query.awaitTermination()
 hdfs_query.awaitTermination()
 kafka_query.awaitTermination()

@@ -35,7 +35,6 @@ for idx, row in streaming_data.iterrows():
     message['timestamp'] = streaming_data.at[idx, 'timestamp'].isoformat()  
 
     producer.produce(topic='transactions', value=str(message))
-    print('sent message...')
     random_sleep()
 
 producer.flush()
