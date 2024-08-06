@@ -5,6 +5,7 @@ import time
 import random
 from datetime import datetime
 
+#function simulating sleeping between producing events
 def random_sleep():
     short_sleep_probability = 0.6
     max_short_sleep = 1.0

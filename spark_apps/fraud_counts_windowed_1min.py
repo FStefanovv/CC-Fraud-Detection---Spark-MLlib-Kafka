@@ -2,7 +2,6 @@ from pyspark.sql import SparkSession
 from pyspark.sql.functions import *
 from pyspark.sql.types import StructType, StructField, IntegerType, DoubleType, TimestampType
 
-
 def quiet_logs(sc):
   logger = sc._jvm.org.apache.log4j
   logger.LogManager.getLogger("org"). setLevel(logger.Level.ERROR)
@@ -45,7 +44,6 @@ console_query = counts_windowed.writeStream\
     .outputMode("update")\
     .format("console")\
     .start()
-
 
 hdfs_query = counts_windowed.coalesce(1).writeStream \
     .format("parquet")\
